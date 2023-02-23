@@ -5,13 +5,15 @@ import Header from './components/Header/Header';
 import TodoList from "./components/TodoList/TodoList";
 import TodoForm from "./components/TodoForm/TodoForm";
 
+import mockedJson from './mocks/todos.json';
+
 const getStoredTodos = () => {
   try {
     const todoList = JSON.parse(window.localStorage.getItem('todoList'));
-    if (!todoList) return [];
+    if (!todoList) return mockedJson;
     return todoList
   } catch (e) {
-    return []
+    return mockedJson
   }
 }
 
