@@ -16,7 +16,7 @@ const TodoForm = (props) => {
 
     return (
        <form onSubmit={handleSubmit}>
-          <input className="p-2 border-solid border-2 border-slate-100 rounded-md block w-full" value={userInput} type="text" onChange={handleChange} placeholder="Enter task..."/>
+          <input className="p-2 border-solid border-2 border-slate-100 rounded-md block w-full" value={userInput} type="text" onChange={handleChange} placeholder="Enter task..." required/>
           <button className="p-2 mt-2 bg-slate-100 border-solid border-2 border-slate-100 rounded-md block" type="submit"><PlusIcon className="h-6 w-5"/></button>
        </form>
     );

@@ -4,9 +4,9 @@ import Todo from './Todo';
 const TodoList = (props) => {
    return (
        <div>
-           {props.todoList.map(todo => {
+           {props.todoList.map((todo) => {
                return (
-                  <Todo todo={todo} key={todo.id} handleToggle={props.handleToggle} handleFilter={props.handleFilter}/>
+                  <Todo todo={todo} key={todo.id} id={todo.id} handleToggle={props.handleToggle} />
                )
            })}
 

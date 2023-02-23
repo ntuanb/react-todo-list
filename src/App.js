@@ -5,15 +5,29 @@ import Header from './components/Header/Header';
 import TodoList from "./components/TodoList/TodoList";
 import TodoForm from "./components/TodoForm/TodoForm";
 
-import todosMock from "./mocks/todos.json";
+const getStoredTodos = () => {
+  try {
+    const todoList = JSON.parse(window.localStorage.getItem('todoList'));
+    if (!todoList) return [];
+    return todoList
+  } catch (e) {
+    return []
+  }
+}
+
+const setStoredTodos = (todoList) => {
+  window.localStorage.setItem('todoList', JSON.stringify(todoList));
+}
 
 function App() {
-  const [ todoList, setTodoList ] = useState(todosMock);
+  const [ todoList, setTodoList ] = useState(getStoredTodos());
 
   const handleToggle = (id) => {
     let mapped = todoList.map(task => {
       return task.id === id ? { ...task, complete: !task.complete } : { ...task};
     });
+
+    setStoredTodos(mapped);
     setTodoList(mapped);
   }
 
@@ -21,12 +35,14 @@ function App() {
     let filtered = todoList.filter(task => {
       return !task.complete;
     });
+    setStoredTodos(filtered);
     setTodoList(filtered);
   }
 
   const addTask = (userInput) => {
     let copy = [...todoList];
-    copy = [...copy, { id: todoList.length + 1, task: userInput, complete: false }];
+    copy = [...copy, { id: Math.ceil(Math.random() * 10000), task: userInput, complete: false }];
+    setStoredTodos(copy);
     setTodoList(copy);
   }
 
@@ -35,8 +51,13 @@ function App() {
       <div className="mb-10">
         <Header/>
       </div>
-      <div class="grid grid-cols-2 gap-4 ml-10 mr-10">
-        <TodoList todoList={todoList} addTask={addTask} handleToggle={handleToggle} handleFilter={handleFilter} />
+      <div className="grid grid-cols-2 gap-4 ml-10 mr-10">
+        <TodoList
+          todoList={todoList}
+          addTask={addTask}
+          handleToggle={handleToggle}
+          handleFilter={handleFilter}
+          />
 
         <TodoForm addTask={addTask}/>
       </div>
